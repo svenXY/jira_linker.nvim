@@ -1,0 +1,6 @@
+jira_linker	jira_linker.txt	/*jira_linker*
+jira_linker-commands	jira_linker.txt	/*jira_linker-commands*
+jira_linker-install	jira_linker.txt	/*jira_linker-install*
+jira_linker-interface	jira_linker.txt	/*jira_linker-interface*
+jira_linker-intro	jira_linker.txt	/*jira_linker-intro*
+jira_linker.txt	jira_linker.txt	/*jira_linker.txt*
