@@ -1,6 +1,29 @@
+local function _fix_base_url(url)
+	if url:match("^https://.+/browse/$") then
+		return url
+	end
+	if not url:match("^https?://") then
+		url = "https://" .. url
+	end
+	if not url:match("/$") then
+		url = url .. "/"
+	end
+	if not url:match("browse/$") then
+		url = url .. "browse/"
+	end
+	return url
+end
+
 local M = {}
 
-local jira_base_url = "https://your-jira-instance.atlassian.net/browse/" -- Change this to your JIRA instance URL
+M.config = {
+	jira_base_url = "jira.example.com",
+}
+
+function M.setup(user_opts)
+	M.config = vim.tbl_deep_extend("force", M.config, user_opts)
+	M.config.jira_base_url = _fix_base_url(M.config.jira_base_url)
+end
 
 -- Function to check if the current buffer is a markdown file
 local function is_markdown_file()
@@ -25,7 +48,7 @@ function M.replace_jira_links()
 		local new_line = line:gsub("(%s*)(%u+%-%d+)(%s*)", function(space, ticket_id, space_after)
 			-- Check if the ticket_id is already part of a link
 			if not line:match("%[" .. escape_magic(ticket_id) .. "%]%(") then
-				return string.format("%s[%s](%s%s)%s", space, ticket_id, jira_base_url, ticket_id, space_after)
+				return string.format("%s[%s](%s%s)%s", space, ticket_id, M.config.jira_base_url, ticket_id, space_after)
 			end
 			return string.format("%s%s%s", space, ticket_id, space_after) -- Return the original if already linked
 		end)
@@ -50,7 +73,7 @@ function M.insert_jira_link()
 	end
 
 	local current_line = vim.api.nvim_get_current_line()
-	local new_link = string.format("[%s](%s%s)", ticket_id, jira_base_url, ticket_id)
+	local new_link = string.format("[%s](%s%s)", ticket_id, M.config.jira_base_url, ticket_id)
 	local new_line = current_line .. new_link
 
 	vim.api.nvim_set_current_line(new_line)
