@@ -1,68 +1,84 @@
-*jira_linker.txt*    Plugin for managing JIRA ticket links in Neovim.
-
-Author: SvenXY  
-Version: 0.0.1
-Source: https://github.com/svenXY/jira-linker  
+*jira_linker.txt*                                     Last change: 2025 Mai 08
 
 ==============================================================================
-CONTENTS                                                        *jira_linker*
+Table of Contents                              *jira_linker-table-of-contents*
 
-1. Introduction .............................................. |jira_linker-intro|
-2. Installation .............................................. |jira_linker-install|
-3. Public Interface .......................................... |jira_linker-interface|
-4. User Commands ............................................. |jira_linker-commands|
+Installation ...................................... |jira_linker-installation|
+Public Interface .............................. |jira_linker-public-interface|
+User Commands .................................... |jira_linker-user-commands|
 
 ==============================================================================
-1. Introduction                                                *jira_linker-intro*
+INTRODUCTION                                        *jira_linker-introduction*
 
-The `jira_linker` plugin provides utilities for working with JIRA ticket IDs 
-in markdown files. It allows users to replace ticket IDs with clickable links 
+
+The `jira_linker` plugin provides utilities for working with JIRA ticket IDs
+in markdown files. It allows users to replace ticket IDs with clickable links
 or insert new links directly into the current buffer.
 
-==============================================================================
-2. Installation                                                *jira_linker-install*
 
-To install `jira_linker`, use your preferred Neovim plugin manager. For example:
+------------------------------------------------------------------------------
+INSTALLATION                                        *jira_linker-installation*
 
-With `packer.nvim`:
->
-    use 'svenXY/jira-linker'
 
-==============================================================================
-3. Public Interface                                            *jira_linker-interface*
+To install `jira_linker`, use your preferred Neovim plugin manager. For
+example:
+
+With `lazy.nvim`:
+
+>lua
+    {
+    'svenXY/jira-linker',
+      opts = {
+        jira_base_url = 'jira.yourdomain.com'
+      }
+    }
+<
+
+------------------------------------------------------------------------------
+PUBLIC INTERFACE                                *jira_linker-public-interface*
+
 
 The plugin exposes the following Lua functions:
 
-- `jira_linker.replace_jira_links()`:
-  Replaces all JIRA ticket IDs in the current buffer with clickable links. 
-  This function only works in markdown files. If the buffer is not a markdown 
-  file, it will print a message and do nothing.
+`jira_linker.replace_jira_links()`
 
-- `jira_linker.insert_jira_link()`:
-  Prompts the user for a JIRA ticket ID and inserts a clickable link at the 
-  end of the current line. This function also works only in markdown files.
+Replaces all JIRA ticket IDs in the current buffer with clickable links. This
+function only works in markdown files. If the buffer is not a markdown file,
+it will print a message and do nothing.
 
-- `jira_linker.remove_jira_link()`:
-  Remove Jira links on the current line and just keep the ticket ID.
+`jira_linker.insert_jira_link()`
 
-==============================================================================
-4. User Commands                                               *jira_linker-commands*
+Prompts the user for a JIRA ticket ID and inserts a clickable link at the end
+of the current line. This function also works only in markdown files.
+
+`jira_linker.remove_jira_link()`
+
+Remove Jira links on the current line and just keep the ticket ID.
+
+
+------------------------------------------------------------------------------
+USER COMMANDS                                      *jira_linker-user-commands*
+
 
 The plugin defines the following user commands:
 
-- `:JiraLinkerReplace`:
-  Executes `jira_linker.replace_jira_links()` to replace all JIRA ticket IDs 
-  in the current buffer with clickable links.
+`:JiraLinkerReplace`
 
-- `:JiraLinkerInsert`:
-  Executes `jira_linker.insert_jira_link()` to prompt for a JIRA ticket ID 
-  and insert a clickable link at the current cursor position.
+Executes `jira_linker.replace_jira_links()` to replace all JIRA ticket IDs in
+the current buffer with clickable links.
 
-Both commands are restricted to markdown files. If executed in a non-markdown 
+`:JiraLinkerInsert`
+
+Executes `jira_linker.insert_jira_link()` to prompt for a JIRA ticket ID and
+insert a clickable link at the current cursor position.
+
+Both commands are restricted to markdown files. If executed in a non-markdown
 buffer, they will print a message and take no action.
 
-- `:JiraLinkerRemove`:
-  Executes `jira_linker.remove_jira_link()` to remove the links in the current line.
+`:JiraLinkerRemove`
 
-==============================================================================
+Executes `jira_linker.remove_jira_link()` to remove the links in the current
+line.
+
+
 vim:tw=78:ts=8:ft=help:norl:
