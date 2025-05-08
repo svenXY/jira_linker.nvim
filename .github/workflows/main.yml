@@ -1,0 +1,2 @@
+- name: Nvim Busted Action
+  uses: nvim-neorocks/nvim-busted-action@v1.1.0
