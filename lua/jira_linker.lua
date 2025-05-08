@@ -80,4 +80,9 @@ function M.insert_jira_link()
 	vim.cmd("normal $")
 end
 
+function M.remove_jira_link()
+	local line = vim.api.nvim_get_current_line()
+	local updated_line = line:gsub("%[(%u+%-%d+)%]%([^]]+%)", "%1")
+	vim.api.nvim_set_current_line(updated_line)
+end
 return M
